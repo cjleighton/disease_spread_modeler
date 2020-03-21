@@ -6,9 +6,6 @@ import matplotlib.pyplot as plt
 # for each city, maintain a list of indices in citizens[] from that city
 citizens=np.array([])
 
-# when someone leaves their hometown, mark them as such in the class
-# when someone leaves town, keep a count of how long they've been gone
-# when someone is gone for 3(?) days, automatically return them home
 class citizen():
     def __init__(self,infected,hometown,contacts):
         self.infected=infected # are they infected?
@@ -70,13 +67,9 @@ infected_people_al=np.array([])
 infected_people_ch=np.array([])
 day_arr=np.array([])
 
-#...first day. put in day iterator loop
-#...for first city. put in city iterator loop (also, put cities in cities[])
-# how to access whether citizens in denver are infected
-# for each city, use <city>.citizens_begin and .citizens_end
-for day in range(0,250):
-    for city_index in range(0,len(cities)):
-        for i in range(cities[city_index].citizens_begin,cities[city_index].citizens_end):
+for day in range(0,250): # time iterator
+    for city_index in range(0,len(cities)): # consider all cities
+        for i in range(cities[city_index].citizens_begin,cities[city_index].citizens_end): # consider all citizens in each city
             if citizens[i].infected==True: # citizen is infected
 
                 # infect people on citizen i's contact list
@@ -93,9 +86,9 @@ for day in range(0,250):
                             infect_prob_factor = 1
                             if (random.randrange(100)<infect_prob_factor*infect_prob*100)==True:
                                 citizens[curr_contact].infected=True # infect the contact
+
                 # infect some random people in the city they're currently in
                 for k in range(0,len(cities)): # we need start and end indices in citizens[] for current city
-                # this is necessary. even though outer loops are iterating through citizens[], citizen i might not be in curr_city
                     if cities[k].name==citizens[i].curr_city:
                         curr_city_citizens_begin = cities[k].citizens_begin
                         curr_city_citizens_end = cities[k].citizens_end
@@ -134,7 +127,7 @@ for day in range(0,250):
             citizens[transit_indices_curr_city[i]].curr_city=cities[city_index].adj_cities[rand_adj_city_index]
 
 
-    # TEMP: INFECTION COUNTER ##################################################
+    # infection counter, replace
     infected_sum_den = 0
     infected_sum_SL = 0
     infected_sum_ph = 0
